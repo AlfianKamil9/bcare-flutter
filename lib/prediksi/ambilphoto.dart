@@ -31,7 +31,8 @@ class _AmbilFotoState extends State<AmbilFoto> {
             padding: const EdgeInsets.only(left: 80.0),
             child: Text(
               'Ambil Foto',
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style:
+                  TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
             ),
           )),
       body: Center(

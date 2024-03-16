@@ -1,20 +1,41 @@
-import 'package:bcare/main.dart';
+import 'package:bcare/Service/auth_service.dart';
+import 'package:bcare/Service/token_service.dart';
+import 'package:bcare/home.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class LoginPage extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Login(),
-      routes: {
-        '/masukHalamanUtama': (context) => MyHomePage(),
-      },
-    );
-  }
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class Login extends StatelessWidget {
+class _LoginPageState extends State<LoginPage> {
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+
+  Future<void> loginUser() async {
+    final String email = _emailController.text;
+    final String password = _passwordController.text;
+
+    try {
+      final result = await Authentikasi.login(email, password);
+      if (result['code'] == 200) {
+        await TokenManager.saveToken(result['token']);
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (BuildContext context) => HalamanUtamaPage()));
+      }
+    } catch (e) {
+      print(e);
+      _showErrorSnackbar(e.toString());
+    }
+  }
+
+  void _showErrorSnackbar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(message),
+      duration: Duration(seconds: 3),
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,6 +64,7 @@ class Login extends StatelessWidget {
                       height: 50,
                     ),
                     TextField(
+                      controller: _emailController,
                       decoration: InputDecoration(
                           labelText: 'Email',
                           border: OutlineInputBorder(
@@ -54,6 +76,7 @@ class Login extends StatelessWidget {
                     ),
                     SizedBox(height: 30),
                     TextField(
+                      controller: _passwordController,
                       obscureText: true,
                       decoration: InputDecoration(
                           labelText: 'Password',
@@ -76,10 +99,7 @@ class Login extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                   ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/masukHalamanUtama');
-                    print('Login clicked');
-                  },
+                  onPressed: loginUser,
                   child: const Text('Masuk',
                       style: TextStyle(
                           color: Colors.white,

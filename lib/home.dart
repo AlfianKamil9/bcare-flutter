@@ -1,35 +1,50 @@
+import 'package:bcare/Service/auth_service.dart';
+import 'package:bcare/artikel.dart';
 import 'package:bcare/menu.dart';
+import 'package:bcare/model/artikel.dart';
 import 'package:bcare/profile.dart';
-
-import 'artikel.dart';
+import 'package:bcare/service/artikel_service.dart';
 import 'package:flutter/material.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 
-class HalamanUtamaPage extends StatelessWidget {
+class HalamanUtamaPage extends StatefulWidget {
   const HalamanUtamaPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: HalamanUtama(),
-      routes: {'/artikel': (context) => DetailArtikel()},
-    );
-  }
+  State<HalamanUtamaPage> createState() => _HalamanUtamaPageState();
 }
 
-class HalamanUtama extends StatefulWidget {
-  @override
-  State<HalamanUtama> createState() => _HalamanUtamaState();
-}
-
-class _HalamanUtamaState extends State<HalamanUtama> {
+class _HalamanUtamaPageState extends State<HalamanUtamaPage> {
+// PAGINATION
   List<Widget> pages = [HalamanUtamaPage(), BcareMenu(), Profile()];
-
   int currentIndex = 0;
+  // GET ARTIKEL
+  List<Artikel> listArtikel = [];
+  bool isLoading = true;
+  Map<String, dynamic> userData = {};
+
+  void fetchUserData() async {
+    final user = await Authentikasi.getUser();
+    userData = user;
+  }
+
+  void fetchArticle() async {
+    isLoading = false;
+    final result = await ArtikelService.fetchArticles();
+    listArtikel = result;
+    setState(() {});
+    isLoading = false;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchArticle();
+    fetchUserData();
+  }
 
   @override
   Widget build(BuildContext context) {
-    //   Membuat TAMPIL
     return Scaffold(
       backgroundColor: Colors.white12,
       body: Container(
@@ -58,7 +73,7 @@ class _HalamanUtamaState extends State<HalamanUtama> {
                               ),
                               SizedBox(height: 3),
                               Text(
-                                'Siti Nurbaya',
+                                "${userData['name']}",
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -248,64 +263,107 @@ class _HalamanUtamaState extends State<HalamanUtama> {
                                     ),
                                     // ARTIKEL 1
                                     Container(
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder:
-                                                    (BuildContext context) =>
-                                                        DetailArtikel()),
-                                          );
-                                        },
-                                        child: Column(
-                                          children: [
-                                            Divider(
-                                              thickness: 1.0, // Line thickness
-                                              color: Colors.grey, // Line color
-                                              indent:
-                                                  20.0, // Indentation from the left edge
-                                              endIndent:
-                                                  10.0, // Indentation from the right edge
-                                            ),
-                                            Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 7, vertical: 5),
-                                                child: Container(
-                                                  child: Text(
-                                                    "6 Tips Jitu Mencegah Baby Blues Setelah Melahirkan",
-                                                    textAlign:
-                                                        TextAlign.justify,
-                                                    style: TextStyle(
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: Colors.black,
+                                        child: isLoading == true
+                                            ? Center(
+                                                child:
+                                                    CircularProgressIndicator(),
+                                              )
+                                            : ListView.builder(
+                                                scrollDirection: Axis.vertical,
+                                                shrinkWrap: true,
+                                                itemCount: listArtikel.length,
+                                                itemBuilder: (context, index) {
+                                                  final artikel =
+                                                      listArtikel[index];
+                                                  return Container(
+                                                      child: GestureDetector(
+                                                    onTap: () {
+                                                      Navigator.of(context)
+                                                          .push(
+                                                        MaterialPageRoute(
+                                                            builder: (BuildContext
+                                                                    context) =>
+                                                                DetailArtikel(
+                                                                  artikel.id
+                                                                      .toString(),
+                                                                )),
+                                                      );
+                                                    },
+                                                    child: Column(
+                                                      children: [
+                                                        Divider(
+                                                          thickness:
+                                                              1.0, // Line thickness
+                                                          color: Colors
+                                                              .grey, // Line color
+                                                          indent:
+                                                              20.0, // Indentation from the left edge
+                                                          endIndent:
+                                                              10.0, // Indentation from the right edge
+                                                        ),
+                                                        Padding(
+                                                            padding: EdgeInsets
+                                                                .symmetric(
+                                                                    horizontal:
+                                                                        7,
+                                                                    vertical:
+                                                                        5),
+                                                            child: Container(
+                                                              child: Text(
+                                                                "${artikel.title}", //TITLE ARTIKEL
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .justify,
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 16,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  color: Colors
+                                                                      .black,
+                                                                ),
+                                                                softWrap: true,
+                                                                maxLines: 2,
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                              ),
+                                                            )),
+                                                        Padding(
+                                                            padding: EdgeInsets
+                                                                .symmetric(
+                                                                    horizontal:
+                                                                        7,
+                                                                    vertical:
+                                                                        5),
+                                                            child: Container(
+                                                              child: Text(
+                                                                "${artikel.subTitle}",
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .justify,
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 12,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                  color: Colors
+                                                                      .black,
+                                                                ),
+                                                                softWrap: true,
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                maxLines: 2,
+                                                              ),
+                                                            )),
+                                                        SizedBox(height: 10),
+                                                      ],
                                                     ),
-                                                    softWrap: true,
-                                                  ),
-                                                )),
-                                            Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                    horizontal: 7, vertical: 5),
-                                                child: Container(
-                                                  child: Text(
-                                                    "Lahirnya sang buah hati ke dunia merupakan peristiwa yang mengundang berjuta emosi. Setelah menjalani masa-masa kehamilan ",
-                                                    textAlign:
-                                                        TextAlign.justify,
-                                                    style: TextStyle(
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color: Colors.black,
-                                                    ),
-                                                    softWrap: true,
-                                                  ),
-                                                )),
-                                            SizedBox(height: 10),
-                                          ],
-                                        ),
-                                      ),
-                                    )
+                                                  ));
+                                                })),
                                   ],
                                 ),
                               ),

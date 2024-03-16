@@ -1,5 +1,7 @@
+import 'package:bcare/Service/auth_service.dart';
+import 'package:bcare/Service/token_service.dart';
+import 'package:bcare/pilihanMasuk.dart';
 import 'package:bcare/tentangkami.dart';
-
 import 'home.dart';
 import 'menu.dart';
 import 'package:flutter/material.dart';
@@ -14,8 +16,38 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   List<Widget> pages = [HalamanUtamaPage(), BcareMenu(), Profile()];
-
   int currentIndex = 2;
+  // get user
+  late Future<Map<String, dynamic>> _futureDetailUser;
+
+  Future<void> userToLogout() async {
+    try {
+      final result = await Authentikasi.logout();
+      if (result['code'] == 200) {
+        await TokenManager.deleteToken();
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (BuildContext context) => PilihanMasukPage()));
+      } else {
+        _showErrorSnackbar(result['message']);
+      }
+    } catch (e) {
+      _showErrorSnackbar(e.toString());
+    }
+  }
+
+  void _showErrorSnackbar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(message),
+      duration: Duration(seconds: 3),
+    ));
+  }
+
+  @override
+  void initState() {
+    //final token = TokenManager.getToken();
+    super.initState();
+    _futureDetailUser = Authentikasi.getUser();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,16 +80,39 @@ class _ProfileState extends State<Profile> {
               ),
             ),
             SizedBox(height: 15),
-            Text(
-              "Dewi Aulia Mahardika",
-              softWrap: true,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-            ),
-            SizedBox(height: 5),
-            Text(
-              "dewiauliam9@gmail.com",
-              softWrap: true,
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+            Container(
+              child: FutureBuilder(
+                  future: _futureDetailUser,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (snapshot.hasError) {
+                      return Center(
+                        child: Text("Error"),
+                      );
+                    } else {
+                      final user = snapshot.data!;
+                      return Column(
+                        children: [
+                          Text(
+                            "${user['name']}",
+                            softWrap: true,
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w500),
+                          ),
+                          SizedBox(height: 5),
+                          Text(
+                            "${user['email']}",
+                            softWrap: true,
+                            style: TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.w400),
+                          ),
+                        ],
+                      );
+                    }
+                  }),
             ),
             SizedBox(
               height: 20,
@@ -122,7 +177,7 @@ class _ProfileState extends State<Profile> {
               height: 30,
             ),
             ElevatedButton(
-                onPressed: () {},
+                onPressed: userToLogout,
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
                     fixedSize: Size(2000, 50),

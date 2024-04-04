@@ -7,7 +7,7 @@ class Authentikasi {
       String familyEmail, String password, String confPassword) async {
     try {
       final response = await http.post(
-        Uri.parse('https://backend-hwy6vx3s6a-uc.a.run.app/api/v1/register'),
+        Uri.parse('https://backend2-hwy6vx3s6a-et.a.run.app//api/v1/register'),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
           'Accept': 'application/json',
@@ -36,7 +36,7 @@ class Authentikasi {
       String email, String password) async {
     try {
       final response = await http.post(
-        Uri.parse('https://backend-hwy6vx3s6a-uc.a.run.app/api/v1/login'),
+        Uri.parse('https://backend2-hwy6vx3s6a-et.a.run.app//api/v1/login'),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
           'Accept': 'application/json',
@@ -65,7 +65,7 @@ class Authentikasi {
     try {
       final token = await TokenManager.getToken();
       final response = await http.delete(
-          Uri.parse("https://backend-hwy6vx3s6a-uc.a.run.app/api/v1/logout"),
+          Uri.parse("https://backend2-hwy6vx3s6a-et.a.run.app//api/v1/logout"),
           headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
@@ -88,7 +88,7 @@ class Authentikasi {
     try {
       final token = await TokenManager.getToken();
       final response = await http.get(
-          Uri.parse('https://backend-hwy6vx3s6a-uc.a.run.app/api/v1/user'),
+          Uri.parse('https://backend2-hwy6vx3s6a-et.a.run.app//api/v1/user'),
           headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
@@ -97,8 +97,8 @@ class Authentikasi {
       if (response.statusCode == 200) {
         final result = jsonDecode(response.body);
         final detailUser = result['data'];
-        print('User Login : $detailUser');
-        print('TOKEN : $token');
+        // print('User Login : $detailUser');
+        // print('TOKEN : $token');
         return detailUser;
       } else {
         throw Exception("Error : User Tidak Ditemukan");

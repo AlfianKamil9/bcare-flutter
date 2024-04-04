@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:bcare/Service/token_service.dart';
 import 'package:bcare/home.dart';
-import 'package:bcare/infoKuisioner.dart';
 import 'package:bcare/login.dart';
 import 'package:bcare/pilihanMasuk.dart';
 import 'package:bcare/profile.dart';
 import 'package:bcare/register.dart';
+import 'package:bcare/menu.dart';
 
 void main() {
   runApp(const MyApp());
@@ -39,8 +39,8 @@ class MyApp extends StatelessWidget {
                 home: HalamanUtamaPage(),
                 initialRoute: '/home',
                 routes: {
+                  '/bcare-menu': (context) => BcareMenu(),
                   '/home': (context) => HalamanUtamaPage(),
-                  '/persiapan-prediksi': (context) => InfoKuisioner(),
                   '/profile': (context) => Profile(),
                 },
               );

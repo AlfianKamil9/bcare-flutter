@@ -52,15 +52,6 @@ class _Pertanyaan2State extends State<Pertanyaan2> {
     listQ = result;
     setState(() {});
     isLoading = false;
-
-    // Inisialisasi map jawaban
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   for (int i = 0; i < listQ.length; i++) {
-    //     answer[i] = null;
-    //   }
-    // }
-
-    // );
   }
 
   void _showTrueSnackbar(String message) {
@@ -93,7 +84,13 @@ class _Pertanyaan2State extends State<Pertanyaan2> {
     return Scaffold(
       appBar: AppBar(
           backgroundColor: Colors.blue[400],
-          leading: Container(),
+          leading: IconButton(
+            color: Colors.white,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(Icons.arrow_back_ios_outlined),
+          ),
           title: Padding(
             padding: const EdgeInsets.only(left: 50.0),
             child: Text(

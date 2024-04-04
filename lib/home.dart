@@ -1,9 +1,15 @@
-import 'package:bcare/Service/auth_service.dart';
-import 'package:bcare/artikel.dart';
+import 'package:bcare/Service/token_service.dart';
+import 'package:bcare/Service/video_service.dart';
+import 'package:bcare/artikel/artikel.dart';
+import 'package:bcare/artikel/detailartikel.dart';
+import 'package:bcare/detailUser.dart';
 import 'package:bcare/menu.dart';
 import 'package:bcare/model/artikel.dart';
+import 'package:bcare/model/video.dart';
 import 'package:bcare/profile.dart';
 import 'package:bcare/service/artikel_service.dart';
+import 'package:bcare/vidio/detailvideo.dart';
+import 'package:bcare/vidio/video.dart';
 import 'package:flutter/material.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 
@@ -20,27 +26,52 @@ class _HalamanUtamaPageState extends State<HalamanUtamaPage> {
   int currentIndex = 0;
   // GET ARTIKEL
   List<Artikel> listArtikel = [];
+  List<Videos> listVideo = [];
   bool isLoading = true;
-  Map<String, dynamic> userData = {};
+  bool isLoadingVideo = true;
+  String name = '';
+  String hasil = '';
+  String saran = '';
 
   void fetchUserData() async {
-    final user = await Authentikasi.getUser();
-    userData = user;
+    name = (await TokenManager.getName())!;
+    setState(() {
+      name = name;
+    });
+  }
+
+  void fetchKondisi() async {
+    final result = await TokenManager.getLastHasil();
+    final suggest = await TokenManager.getLastSaran();
+    setState(() {
+      hasil = result.toString();
+      saran = suggest.toString();
+    });
   }
 
   void fetchArticle() async {
     isLoading = false;
     final result = await ArtikelService.fetchArticles();
-    listArtikel = result;
+    listArtikel = result.take(2).toList();
     setState(() {});
     isLoading = false;
+  }
+
+  void fetchVideo() async {
+    isLoading = false;
+    final result = await VideoService.fetchVideos();
+    listVideo = result.take(2).toList();
+    setState(() {});
+    isLoadingVideo = false;
   }
 
   @override
   void initState() {
     super.initState();
     fetchArticle();
+    fetchVideo();
     fetchUserData();
+    fetchKondisi();
   }
 
   @override
@@ -51,7 +82,7 @@ class _HalamanUtamaPageState extends State<HalamanUtamaPage> {
           color: Color.fromARGB(255, 246, 248, 249),
           child: ListView(children: [
             Container(
-              padding: EdgeInsets.all(30.0),
+              padding: EdgeInsets.only(left: 20, right: 20, top: 10),
               child: Container(
                 child: Column(
                   children: <Widget>[
@@ -73,7 +104,7 @@ class _HalamanUtamaPageState extends State<HalamanUtamaPage> {
                               ),
                               SizedBox(height: 3),
                               Text(
-                                "${userData['name']}",
+                                "${name}",
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -92,11 +123,17 @@ class _HalamanUtamaPageState extends State<HalamanUtamaPage> {
                             ],
                           ),
                           // Spacer(flex: 1),
-                          Container(
-                            child: Image.asset(
-                              'assets/images/profile.png',
-                              width: 50,
-                              height: 50,
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => MyProfileUser()));
+                            },
+                            child: Container(
+                              child: Image.asset(
+                                'assets/images/profile.png',
+                                width: 50,
+                                height: 50,
+                              ),
                             ),
                           ),
                         ],
@@ -134,10 +171,15 @@ class _HalamanUtamaPageState extends State<HalamanUtamaPage> {
                               Padding(
                                   padding: EdgeInsets.only(left: 7),
                                   child: Text(
-                                    "Depresi Ringan",
+                                    hasil == 'null'
+                                        ? 'Belum Ada Riwayat'
+                                        : hasil,
                                     style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w500,
+                                      fontStyle: hasil == 'null'
+                                          ? FontStyle.italic
+                                          : FontStyle.normal,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
                                       color: Color.fromARGB(255, 67, 67, 67),
                                     ),
                                   )),
@@ -183,29 +225,19 @@ class _HalamanUtamaPageState extends State<HalamanUtamaPage> {
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 7, vertical: 5),
                                     child: Container(
-                                      child: RichText(
-                                          text: TextSpan(children: [
-                                        TextSpan(
-                                            text:
-                                                "Akhir - akhir ini anda belum mencapai target harian langkah rekomendasi ",
-                                            style: TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.w500)),
-                                        TextSpan(
-                                            text: "Olahraga Jogging ",
-                                            style: TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.blue,
-                                                fontWeight: FontWeight.w600)),
-                                        TextSpan(
-                                            text:
-                                                "untuk memaksimalkan kesehatan Anda",
-                                            style: TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.w500)),
-                                      ])),
+                                      child: Text(
+                                          saran == 'null'
+                                              ? 'Tidak Ada Saran'
+                                              : saran,
+                                          softWrap: true,
+                                          textAlign: TextAlign.start,
+                                          style: TextStyle(
+                                              fontStyle: hasil == 'null'
+                                                  ? FontStyle.italic
+                                                  : FontStyle.normal,
+                                              fontSize: 12,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w500)),
                                     )),
                               ],
                             ),
@@ -230,15 +262,18 @@ class _HalamanUtamaPageState extends State<HalamanUtamaPage> {
                     // CARD Artikel
                     SizedBox(height: 30),
                     Card(
-                        color: Colors.white,
                         child: Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Column(
-                            children: [
-                              Container(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.max,
+                      padding: const EdgeInsets.all(20.0),
+                      child: Column(
+                        children: [
+                          Container(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Row(
                                       mainAxisAlignment:
@@ -261,115 +296,286 @@ class _HalamanUtamaPageState extends State<HalamanUtamaPage> {
                                         )
                                       ],
                                     ),
-                                    // ARTIKEL 1
-                                    Container(
-                                        child: isLoading == true
-                                            ? Center(
-                                                child:
-                                                    CircularProgressIndicator(),
-                                              )
-                                            : ListView.builder(
-                                                scrollDirection: Axis.vertical,
-                                                shrinkWrap: true,
-                                                itemCount: listArtikel.length,
-                                                itemBuilder: (context, index) {
-                                                  final artikel =
-                                                      listArtikel[index];
-                                                  return Container(
-                                                      child: GestureDetector(
-                                                    onTap: () {
-                                                      Navigator.of(context)
-                                                          .push(
-                                                        MaterialPageRoute(
-                                                            builder: (BuildContext
-                                                                    context) =>
-                                                                DetailArtikel(
-                                                                  artikel.id
-                                                                      .toString(),
-                                                                )),
-                                                      );
-                                                    },
-                                                    child: Column(
-                                                      children: [
-                                                        Divider(
-                                                          thickness:
-                                                              1.0, // Line thickness
-                                                          color: Colors
-                                                              .grey, // Line color
-                                                          indent:
-                                                              20.0, // Indentation from the left edge
-                                                          endIndent:
-                                                              10.0, // Indentation from the right edge
-                                                        ),
-                                                        Padding(
-                                                            padding: EdgeInsets
-                                                                .symmetric(
-                                                                    horizontal:
-                                                                        7,
-                                                                    vertical:
-                                                                        5),
-                                                            child: Container(
-                                                              child: Text(
-                                                                "${artikel.title}", //TITLE ARTIKEL
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .justify,
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontSize: 16,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  color: Colors
-                                                                      .black,
-                                                                ),
-                                                                softWrap: true,
-                                                                maxLines: 2,
-                                                                overflow:
-                                                                    TextOverflow
-                                                                        .ellipsis,
-                                                              ),
-                                                            )),
-                                                        Padding(
-                                                            padding: EdgeInsets
-                                                                .symmetric(
-                                                                    horizontal:
-                                                                        7,
-                                                                    vertical:
-                                                                        5),
-                                                            child: Container(
-                                                              child: Text(
-                                                                "${artikel.subTitle}",
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .justify,
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontSize: 12,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  color: Colors
-                                                                      .black,
-                                                                ),
-                                                                softWrap: true,
-                                                                overflow:
-                                                                    TextOverflow
-                                                                        .ellipsis,
-                                                                maxLines: 2,
-                                                              ),
-                                                            )),
-                                                        SizedBox(height: 10),
-                                                      ],
-                                                    ),
-                                                  ));
-                                                })),
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ArtikelPage()));
+                                        },
+                                        child: Text("See All",
+                                            style: TextStyle(
+                                                decoration:
+                                                    TextDecoration.underline)))
                                   ],
                                 ),
-                              ),
-                            ],
+                                // ARTIKEL 1
+                                Container(
+                                    child: isLoading == true
+                                        ? Center(
+                                            child: CircularProgressIndicator(),
+                                          )
+                                        : ListView.builder(
+                                            scrollDirection: Axis.vertical,
+                                            shrinkWrap: true,
+                                            itemCount: listArtikel.length,
+                                            itemBuilder: (context, index) {
+                                              final artikel =
+                                                  listArtikel[index];
+                                              return Container(
+                                                  child: GestureDetector(
+                                                onTap: () {
+                                                  Navigator.of(context).push(
+                                                    MaterialPageRoute(
+                                                        builder: (BuildContext
+                                                                context) =>
+                                                            DetailArtikel(
+                                                              artikel.id
+                                                                  .toString(),
+                                                            )),
+                                                  );
+                                                },
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Divider(
+                                                      thickness:
+                                                          1.0, // Line thickness
+                                                      color: Colors
+                                                          .grey, // Line color
+                                                      indent:
+                                                          2.0, // Indentation from the left edge
+                                                      endIndent:
+                                                          2.0, // Indentation from the right edge
+                                                    ),
+                                                    Padding(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                horizontal: 7,
+                                                                vertical: 1),
+                                                        child: Container(
+                                                          child: Text(
+                                                            "${artikel.title}", //TITLE ARTIKEL
+                                                            textAlign: TextAlign
+                                                                .justify,
+                                                            style: TextStyle(
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color:
+                                                                  Colors.black,
+                                                            ),
+                                                            softWrap: true,
+                                                            maxLines: 2,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                          ),
+                                                        )),
+                                                    Padding(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                horizontal: 7,
+                                                                vertical: 1),
+                                                        child: Container(
+                                                          child: Text(
+                                                            "${artikel.subTitle}",
+                                                            textAlign: TextAlign
+                                                                .justify,
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              color: const Color
+                                                                  .fromARGB(255,
+                                                                  79, 79, 79),
+                                                            ),
+                                                            softWrap: true,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            maxLines: 2,
+                                                          ),
+                                                        )),
+                                                    SizedBox(height: 2),
+                                                    Divider(
+                                                      thickness:
+                                                          1.0, // Line thickness
+                                                      color: Colors
+                                                          .grey, // Line color
+                                                      indent:
+                                                          2.0, // Indentation from the left edge
+                                                      endIndent:
+                                                          2.0, // Indentation from the right edge
+                                                    ),
+                                                  ],
+                                                ),
+                                              ));
+                                            })),
+                              ],
+                            ),
                           ),
-                        )),
+                        ],
+                      ),
+                    )),
+                    SizedBox(height: 20),
+                    Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Column(
+                          children: <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Image.asset(
+                                      'assets/images/video-icon.png',
+                                      width: 50,
+                                      height: 40,
+                                    ),
+                                    SizedBox(width: 7),
+                                    Text(
+                                      "Video Pembelajaran",
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color:
+                                            const Color.fromARGB(255, 0, 0, 0),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  VideoPage()));
+                                    },
+                                    child: Text(
+                                      "See All",
+                                      style: TextStyle(
+                                          decoration: TextDecoration.underline),
+                                    ))
+                              ],
+                            ),
+                            // VIDEO PEMBELAJARAN
+                            Container(
+                              child: isLoading == true
+                                  ? Container(
+                                      child: Center(
+                                      child: CircularProgressIndicator(),
+                                    ))
+                                  : ListView.builder(
+                                      scrollDirection: Axis.vertical,
+                                      shrinkWrap: true,
+                                      itemCount: listVideo.length,
+                                      itemBuilder: (context, index) {
+                                        final video = listVideo[index];
+                                        return Container(
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          DetailVideo(
+                                                              video.id
+                                                                  .toString(),
+                                                              video.link_video
+                                                                  .toString())));
+                                            },
+                                            child: Column(
+                                              children: [
+                                                Divider(
+                                                  thickness:
+                                                      0.5, // Line thickness
+                                                  color: const Color.fromARGB(
+                                                      255,
+                                                      1,
+                                                      1,
+                                                      1), // Line color
+                                                  indent:
+                                                      2.0, // Indentation from the left edge
+                                                  endIndent:
+                                                      2.0, // Indentation from the right edge
+                                                ),
+                                                Container(
+                                                  child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Container(
+                                                          width: 130,
+                                                          height: 65,
+                                                          child: Image.network(
+                                                              "${video.thumbnail_video}",
+                                                              width: 150,
+                                                              height: 75),
+                                                        ),
+                                                        SizedBox(width: 10),
+                                                        Expanded(
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Text(
+                                                                "${video.title_video}",
+                                                                softWrap: true,
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .justify,
+                                                                maxLines: 2,
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    fontSize:
+                                                                        14),
+                                                              ),
+                                                              SizedBox(
+                                                                  height: 20),
+                                                              Container(),
+                                                            ],
+                                                          ),
+                                                        )
+                                                      ]),
+                                                ),
+                                                SizedBox(height: 7),
+                                                Divider(
+                                                  thickness:
+                                                      0.5, // Line thickness
+                                                  color: const Color.fromARGB(
+                                                      255,
+                                                      1,
+                                                      1,
+                                                      1), // Line color
+                                                  indent:
+                                                      2.0, // Indentation from the left edge
+                                                  endIndent:
+                                                      2.0, // Indentation from the right edge
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      }),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    )
                   ],
                 ),
               ),

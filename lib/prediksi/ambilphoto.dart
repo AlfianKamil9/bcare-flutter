@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bcare/Service/prediction_service.dart';
 import 'package:bcare/prediksi/hasilprediksi.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -18,7 +19,40 @@ class _AmbilFotoState extends State<AmbilFoto> {
     final ImagePicker picker = ImagePicker();
     final XFile? imagePicked =
         await picker.pickImage(source: ImageSource.camera);
-    image = File(imagePicked!.path);
+    if (imagePicked != null) {
+      setState(() {
+        image = File(imagePicked.path);
+      });
+    }
+  }
+
+  Future<void> _submitImage() async {
+    try {
+      final res = await PredictionService.submitAndResult(image!);
+      if (res['code'] == 201) {
+        final result = res['data'];
+        print("HASILNYA : ${result}");
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: ((context) => HasilPrediksi(
+                result['hasil'].toString(),
+                result['saran']['deskripsi'].toString(),
+                result['saran']['artikel_relevan'],
+                result['saran']['vidio_relevan'],
+                result['saran']['konseling_relevan'],
+                image))));
+      } else {
+        _showErrorSnackbar(res['message']);
+      }
+    } catch (e) {
+      _showErrorSnackbar(e.toString());
+    }
+  }
+
+  void _showErrorSnackbar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(message),
+      duration: Duration(seconds: 3),
+    ));
   }
 
   @override
@@ -93,10 +127,9 @@ class _AmbilFotoState extends State<AmbilFoto> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     )),
-                onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => HasilPrediksi()));
-                },
+                onPressed: _submitImage,
+                // Navigator.of(context).push(
+                //     MaterialPageRoute(builder: (context) => HasilPrediksi()));
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

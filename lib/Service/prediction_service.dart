@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bcare/Service/token_service.dart';
 import 'package:bcare/model/questions.dart';
 import 'dart:convert';
@@ -8,7 +10,8 @@ class PredictionService {
     try {
       final token = await TokenManager.getToken();
       final response = await http.get(
-          Uri.parse('https://backend-hwy6vx3s6a-uc.a.run.app/api/v1/questions'),
+          Uri.parse(
+              'https://backend2-hwy6vx3s6a-et.a.run.app/api/v1/questions'),
           headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
@@ -44,7 +47,8 @@ class PredictionService {
     try {
       final token = await TokenManager.getToken();
       final response = await http.post(
-        Uri.parse('https://backend-hwy6vx3s6a-uc.a.run.app/api/v1/submit-quiz'),
+        Uri.parse(
+            'https://backend2-hwy6vx3s6a-et.a.run.app/api/v1/submit-quiz'),
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -67,6 +71,30 @@ class PredictionService {
       return result;
     } catch (e) {
       throw Exception("Error, ${e.toString()}");
+    }
+  }
+
+  static Future<Map<String, dynamic>> submitAndResult(File? file) async {
+    try {
+      final token = await TokenManager.getToken();
+      final req = http.MultipartRequest(
+          'POST',
+          Uri.parse(
+              'https://backend2-hwy6vx3s6a-et.a.run.app/api/v1/submit-image'));
+      req.headers['Authorization'] = 'Bearer $token';
+      final pic = await http.MultipartFile.fromPath('file', file!.path);
+      req.files.add(pic);
+      final response = await req.send();
+      final res = await response.stream.bytesToString();
+      //print('TOKEN : $token');
+      final resDecode = jsonDecode(res);
+      final pres = resDecode['data'];
+      await TokenManager.saveLastCondition(
+          pres['hasil'].toString(), pres['saran']['deskripsi'].toString());
+      //print("RESPONSE : ${resDecode}");
+      return resDecode;
+    } catch (e) {
+      throw Exception(e.toString());
     }
   }
 }

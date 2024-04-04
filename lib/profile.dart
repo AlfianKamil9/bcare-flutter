@@ -1,5 +1,7 @@
 import 'package:bcare/Service/auth_service.dart';
 import 'package:bcare/Service/token_service.dart';
+import 'package:bcare/detailUser.dart';
+import 'package:bcare/historyPemesanan/historyPesanan.dart';
 import 'package:bcare/pilihanMasuk.dart';
 import 'package:bcare/tentangkami.dart';
 import 'home.dart';
@@ -18,7 +20,19 @@ class _ProfileState extends State<Profile> {
   List<Widget> pages = [HalamanUtamaPage(), BcareMenu(), Profile()];
   int currentIndex = 2;
   // get user
-  late Future<Map<String, dynamic>> _futureDetailUser;
+
+  String name = '';
+  String email = '';
+
+  void fetchUserData() async {
+    name = (await TokenManager.getName())!;
+    email = (await TokenManager.getEmail())!;
+    print("Name : $name , Email : $email");
+    setState(() {
+      name = name;
+      email = email;
+    });
+  }
 
   Future<void> userToLogout() async {
     try {
@@ -44,9 +58,8 @@ class _ProfileState extends State<Profile> {
 
   @override
   void initState() {
-    //final token = TokenManager.getToken();
     super.initState();
-    _futureDetailUser = Authentikasi.getUser();
+    fetchUserData();
   }
 
   @override
@@ -81,38 +94,27 @@ class _ProfileState extends State<Profile> {
             ),
             SizedBox(height: 15),
             Container(
-              child: FutureBuilder(
-                  future: _futureDetailUser,
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else if (snapshot.hasError) {
-                      return Center(
-                        child: Text("Error"),
-                      );
-                    } else {
-                      final user = snapshot.data!;
-                      return Column(
-                        children: [
-                          Text(
-                            "${user['name']}",
-                            softWrap: true,
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.w500),
-                          ),
-                          SizedBox(height: 5),
-                          Text(
-                            "${user['email']}",
-                            softWrap: true,
-                            style: TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.w400),
-                          ),
-                        ],
-                      );
-                    }
-                  }),
+              child: Column(
+                children: [
+                  Text(
+                    "${name}",
+                    softWrap: true,
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(height: 5),
+                  Text(
+                    "${email}",
+                    softWrap: true,
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400),
+                  ),
+                ],
+              ),
             ),
             SizedBox(
               height: 20,
@@ -122,7 +124,10 @@ class _ProfileState extends State<Profile> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => HistoryPesanan()));
+                    },
                     style: ElevatedButton.styleFrom(
                         fixedSize: Size(150, 50),
                         shape: RoundedRectangleBorder(
@@ -133,7 +138,10 @@ class _ProfileState extends State<Profile> {
                       textAlign: TextAlign.center,
                     )),
                 ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => MyProfileUser()));
+                    },
                     style: ElevatedButton.styleFrom(
                         fixedSize: Size(150, 50),
                         shape: RoundedRectangleBorder(

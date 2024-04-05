@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:bcare/artikel/detailartikel.dart';
-import 'package:bcare/home.dart';
 import 'package:bcare/konseling/detailKonseling.dart';
+import 'package:bcare/layoutNav.dart';
 import 'package:bcare/model/artikel.dart';
-import 'package:bcare/model/konseling.dart';
+import 'package:bcare/model/konsel.dart';
 import 'package:bcare/model/video.dart';
 import 'package:bcare/vidio/detailvideo.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +27,7 @@ class HasilPrediksi extends StatefulWidget {
 class _HasilPrediksiState extends State<HasilPrediksi> {
   List<Artikel> listArtikel = [];
   List<Videos> listVidio = [];
-  List<Konselings> listKonseling = [];
+  List<Konsel> listKonseling = [];
   bool isLoading = true;
 
   @override
@@ -38,7 +38,7 @@ class _HasilPrediksiState extends State<HasilPrediksi> {
         widget.artikel_terkait!.map((e) => Artikel.fromJson(e)).toList();
     listVidio = widget.vidio_terkait!.map((e) => Videos.fromJson(e)).toList();
     listKonseling =
-        widget.konseling_terkait!.map((e) => Konselings.fromJson(e)).toList();
+        widget.konseling_terkait!.map((e) => Konsel.fromJson(e)).toList();
   }
 
   @override
@@ -50,7 +50,7 @@ class _HasilPrediksiState extends State<HasilPrediksi> {
             color: Colors.white,
             onPressed: () {
               Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => HalamanUtamaPage()));
+                  MaterialPageRoute(builder: (context) => LayoutNav()));
             },
             icon: Icon(Icons.arrow_back_ios_outlined),
           ),
@@ -64,7 +64,7 @@ class _HasilPrediksiState extends State<HasilPrediksi> {
           )),
       body: Center(
         child: Padding(
-          padding: EdgeInsets.all(30.0),
+          padding: EdgeInsets.all(20.0),
           child: ListView(children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,7 +75,7 @@ class _HasilPrediksiState extends State<HasilPrediksi> {
                     softWrap: true,
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 25,
+                        fontSize: 22,
                         color: Colors.pink[300]),
                     textAlign: TextAlign.center,
                   ),
@@ -99,7 +99,7 @@ class _HasilPrediksiState extends State<HasilPrediksi> {
                   softWrap: true,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 18,
+                      fontSize: 17,
                       color: Colors.blue[300]),
                   textAlign: TextAlign.start,
                 ),
@@ -111,7 +111,7 @@ class _HasilPrediksiState extends State<HasilPrediksi> {
                   softWrap: true,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 15,
+                      fontSize: 14,
                       color: const Color.fromARGB(255, 0, 0, 0)),
                   textAlign: TextAlign.justify,
                 ),
@@ -128,7 +128,7 @@ class _HasilPrediksiState extends State<HasilPrediksi> {
                                 softWrap: true,
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 18,
+                                    fontSize: 17,
                                     color: Colors.blue[300]),
                                 textAlign: TextAlign.start,
                               ),
@@ -164,7 +164,7 @@ class _HasilPrediksiState extends State<HasilPrediksi> {
                                                   maxLines: 2,
                                                   textAlign: TextAlign.justify,
                                                   style: TextStyle(
-                                                      fontSize: 18,
+                                                      fontSize: 16,
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 ),
@@ -175,7 +175,7 @@ class _HasilPrediksiState extends State<HasilPrediksi> {
                                                   maxLines: 2,
                                                   textAlign: TextAlign.justify,
                                                   style: TextStyle(
-                                                      fontSize: 15,
+                                                      fontSize: 14,
                                                       fontWeight:
                                                           FontWeight.w300),
                                                 )
@@ -188,7 +188,7 @@ class _HasilPrediksiState extends State<HasilPrediksi> {
                       : Container(),
                 ),
                 SizedBox(
-                  height: 30,
+                  height: 20,
                 ),
                 Container(
                   child: listVidio.isNotEmpty
@@ -200,7 +200,7 @@ class _HasilPrediksiState extends State<HasilPrediksi> {
                               softWrap: true,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 18,
+                                  fontSize: 17,
                                   color: Colors.blue[300]),
                               textAlign: TextAlign.start,
                             ),
@@ -273,7 +273,7 @@ class _HasilPrediksiState extends State<HasilPrediksi> {
                       : Container(),
                 ),
                 SizedBox(
-                  height: 30,
+                  height: 20,
                 ),
                 Container(
                   child: listKonseling.isNotEmpty
@@ -281,11 +281,11 @@ class _HasilPrediksiState extends State<HasilPrediksi> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "VIDEO RELEVAN",
+                              "KONSELING RELEVAN",
                               softWrap: true,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 18,
+                                  fontSize: 17,
                                   color: Colors.blue[300]),
                               textAlign: TextAlign.start,
                             ),
@@ -325,7 +325,7 @@ class _HasilPrediksiState extends State<HasilPrediksi> {
                                                         "${konsel.title_konseling}",
                                                         softWrap: true,
                                                         textAlign:
-                                                            TextAlign.justify,
+                                                            TextAlign.start,
                                                         maxLines: 2,
                                                         style: TextStyle(
                                                             color: Colors.black,
@@ -370,7 +370,7 @@ class _HasilPrediksiState extends State<HasilPrediksi> {
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: ((context) => HalamanUtamaPage())));
+                                builder: ((context) => LayoutNav())));
                       },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,

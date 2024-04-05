@@ -7,17 +7,16 @@ class TentangKami extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Padding(
-          padding: const EdgeInsets.only(left: 70.0),
+        title: Center(
           child: Text(
             "Tentang Kami",
-            style: TextStyle(fontWeight: FontWeight.w600),
+            style: TextStyle(fontWeight: FontWeight.w500),
           ),
         ),
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(40.0),
+          padding: const EdgeInsets.all(20.0),
           child: Column(
             children: [
               Container(

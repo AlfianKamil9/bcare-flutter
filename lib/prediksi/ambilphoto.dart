@@ -70,87 +70,92 @@ class _AmbilFotoState extends State<AmbilFoto> {
             ),
           )),
       body: Center(
-          child: Padding(
-        padding: EdgeInsets.all(30.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            image != null
-                ? Container(
-                    height: 200,
-                    width: MediaQuery.of(context).size.width,
-                    child: Image.file(
-                      image!,
-                      fit: BoxFit.cover,
-                    ))
-                : Container(),
-            SizedBox(height: 50),
-            ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    fixedSize: Size(200, 75),
-                    side: BorderSide(
-                      color: Colors.blue.shade300,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    )),
-                onPressed: () async {
-                  await getImage();
-                },
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.camera_alt_rounded,
-                      color: Colors.blue[300],
-                      weight: 40,
-                    ),
-                    SizedBox(width: 5),
-                    Text(
-                      "Buka Kamera",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          color: Colors.blue[300]),
-                      textAlign: TextAlign.center,
-                    )
-                  ],
-                )),
-            SizedBox(height: 20),
-            ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue.shade300,
-                    fixedSize: Size(200, 75),
-                    side: BorderSide(
-                      color: Colors.blue.shade300,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    )),
-                onPressed: _submitImage,
-                // Navigator.of(context).push(
-                //     MaterialPageRoute(builder: (context) => HasilPrediksi()));
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.send_rounded,
-                      color: const Color.fromARGB(255, 255, 255, 255),
-                      weight: 40,
-                    ),
-                    SizedBox(width: 5),
-                    Text(
-                      "Prediksi",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          color: const Color.fromARGB(255, 255, 255, 255)),
-                      textAlign: TextAlign.center,
-                    )
-                  ],
-                ))
-          ],
-        ),
+          child: ListView(
+        children: [
+          Padding(
+              padding: EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  image != null
+                      ? Container(
+                          height: 200,
+                          width: MediaQuery.of(context).size.width,
+                          child: Image.file(
+                            image!,
+                            fit: BoxFit.cover,
+                          ))
+                      : Container(),
+                  SizedBox(height: 50),
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          fixedSize: Size(200, 75),
+                          side: BorderSide(
+                            color: Colors.blue.shade300,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          )),
+                      onPressed: () async {
+                        await getImage();
+                      },
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.camera_alt_rounded,
+                            color: Colors.blue[300],
+                            weight: 40,
+                          ),
+                          SizedBox(width: 5),
+                          Text(
+                            "Buka Kamera",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: Colors.blue[300]),
+                            textAlign: TextAlign.center,
+                          )
+                        ],
+                      )),
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue.shade300,
+                          fixedSize: Size(200, 75),
+                          side: BorderSide(
+                            color: Colors.blue.shade300,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          )),
+                      onPressed: _submitImage,
+                      // Navigator.of(context).push(
+                      //     MaterialPageRoute(builder: (context) => HasilPrediksi()));
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.send_rounded,
+                            color: const Color.fromARGB(255, 255, 255, 255),
+                            weight: 40,
+                          ),
+                          SizedBox(width: 5),
+                          Text(
+                            "Prediksi",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color:
+                                    const Color.fromARGB(255, 255, 255, 255)),
+                            textAlign: TextAlign.center,
+                          )
+                        ],
+                      ))
+                ],
+              )),
+        ],
       )),
     );
   }

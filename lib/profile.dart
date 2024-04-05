@@ -4,10 +4,8 @@ import 'package:bcare/detailUser.dart';
 import 'package:bcare/historyPemesanan/historyPesanan.dart';
 import 'package:bcare/pilihanMasuk.dart';
 import 'package:bcare/tentangkami.dart';
-import 'home.dart';
-import 'menu.dart';
+
 import 'package:flutter/material.dart';
-import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -17,10 +15,6 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  List<Widget> pages = [HalamanUtamaPage(), BcareMenu(), Profile()];
-  int currentIndex = 2;
-  // get user
-
   String name = '';
   String email = '';
 
@@ -67,11 +61,10 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       appBar: AppBar(
         leading: Container(),
-        title: Padding(
-          padding: EdgeInsets.only(left: 100.0),
+        title: Center(
           child: Text(
             "Profile",
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: TextStyle(fontWeight: FontWeight.w500),
           ),
         ),
       ),
@@ -129,13 +122,14 @@ class _ProfileState extends State<Profile> {
                           builder: (context) => HistoryPesanan()));
                     },
                     style: ElevatedButton.styleFrom(
-                        fixedSize: Size(150, 50),
+                        fixedSize: Size(120, 50),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10))),
                     child: Text(
                       "Riwayat Pemesanan",
                       softWrap: true,
                       textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 12),
                     )),
                 ElevatedButton(
                     onPressed: () {
@@ -143,10 +137,14 @@ class _ProfileState extends State<Profile> {
                           builder: (context) => MyProfileUser()));
                     },
                     style: ElevatedButton.styleFrom(
-                        fixedSize: Size(150, 50),
+                        fixedSize: Size(120, 50),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10))),
-                    child: Text("Edit Profile"))
+                    child: Text(
+                      "Edit Profile",
+                      softWrap: true,
+                      style: TextStyle(fontSize: 12),
+                    ))
               ],
             ),
             SizedBox(
@@ -222,40 +220,40 @@ class _ProfileState extends State<Profile> {
           ],
         ),
       )),
-      bottomNavigationBar: ConvexAppBar(
-        style: TabStyle.fixedCircle,
-        backgroundColor: Color(0xFFC5C5C5),
-        color: Color.fromARGB(255, 211, 80, 124),
-        activeColor: Colors.pink[300],
-        initialActiveIndex: 1,
-        height: 60,
-        items: [
-          TabItem(
-            icon: Icon(
-              Icons.home,
-              color: Colors.black,
-              size: 32,
-            ),
-          ),
-          TabItem(
-              icon: Icon(
-            Icons.health_and_safety_sharp,
-            color: Colors.white,
-            size: 40,
-          )),
-          TabItem(
-              icon: Icon(
-            Icons.library_books,
-            color: Colors.black,
-            size: 32,
-          )),
-        ],
-        onTap: (int i) {
-          setState(() => currentIndex = i);
-          Navigator.push(
-              context, MaterialPageRoute(builder: (i) => pages[currentIndex]));
-        },
-      ),
+      // bottomNavigationBar: ConvexAppBar(
+      //   style: TabStyle.fixedCircle,
+      //   backgroundColor: Color(0xFFC5C5C5),
+      //   color: Color.fromARGB(255, 211, 80, 124),
+      //   activeColor: Colors.pink[300],
+      //   initialActiveIndex: 1,
+      //   height: 60,
+      //   items: [
+      //     TabItem(
+      //       icon: Icon(
+      //         Icons.home,
+      //         color: Colors.black,
+      //         size: 32,
+      //       ),
+      //     ),
+      //     TabItem(
+      //         icon: Icon(
+      //       Icons.health_and_safety_sharp,
+      //       color: Colors.white,
+      //       size: 40,
+      //     )),
+      //     TabItem(
+      //         icon: Icon(
+      //       Icons.library_books,
+      //       color: Colors.black,
+      //       size: 32,
+      //     )),
+      //   ],
+      //   onTap: (int i) {
+      //     setState(() => currentIndex = i);
+      //     Navigator.push(
+      //         context, MaterialPageRoute(builder: (i) => pages[currentIndex]));
+      //   },
+      // ),
     );
   }
 }

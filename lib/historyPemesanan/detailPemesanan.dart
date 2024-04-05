@@ -32,8 +32,7 @@ class _DetailHistoryPemesananState extends State<DetailHistoryPemesanan> {
           icon: Icon(Icons.arrow_back_ios_outlined),
         ),
         backgroundColor: Colors.blue[300],
-        title: Padding(
-          padding: const EdgeInsets.only(left: 40),
+        title: Center(
           child: Text(
             "Detail Pemesanan",
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),

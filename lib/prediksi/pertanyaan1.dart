@@ -22,22 +22,21 @@ class Pertanyaan1s extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: Container(),
-        title: Padding(
-            padding: EdgeInsets.all(100.0),
+        title: Center(
             child: Image.asset(
-              'assets/images/BCare.png',
-              height: 20,
-            )),
+          'assets/images/BCare.png',
+          height: 20,
+        )),
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       ),
       body: Center(
           child: Padding(
         padding: EdgeInsets.all(30.0),
-        child: Column(
+        child: ListView(
           children: [
             SizedBox(height: 30),
             Text("Pertanyaan Umum",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 softWrap: true,
                 textAlign: TextAlign.center),
             SizedBox(
@@ -45,7 +44,7 @@ class Pertanyaan1s extends StatelessWidget {
             ),
             Text(
                 "Apakah anda seorang Ibu yang baru melahirkan pada rentang waktu 5 - 14 hari pasca melahirkan ?",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                 softWrap: true,
                 textAlign: TextAlign.center),
             SizedBox(height: 40),
@@ -65,7 +64,7 @@ class Pertanyaan1s extends StatelessWidget {
                         child: Text(
                           "Tidak",
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 20),
+                              fontWeight: FontWeight.bold, fontSize: 17),
                         )),
                     SizedBox(width: 20),
                     ElevatedButton(
@@ -78,7 +77,7 @@ class Pertanyaan1s extends StatelessWidget {
                         child: Text(
                           "Ya",
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 20),
+                              fontWeight: FontWeight.bold, fontSize: 17),
                         ))
                   ],
                 ),

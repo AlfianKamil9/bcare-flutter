@@ -39,12 +39,11 @@ class _VideoPageState extends State<VideoPage> {
             },
             icon: Icon(Icons.arrow_back_ios_outlined),
           ),
-          title: Padding(
-            padding: const EdgeInsets.only(left: 60.0),
+          title: Center(
             child: Text(
               'PLAYER VIDEO',
               style:
-                  TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                  TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
             ),
           )),
       body: Padding(
@@ -89,7 +88,7 @@ class _VideoPageState extends State<VideoPage> {
                                   maxLines: 2,
                                   textAlign: TextAlign.justify,
                                   style: TextStyle(
-                                      fontSize: 16,
+                                      fontSize: 15,
                                       color: Colors.black,
                                       fontWeight: FontWeight.w700),
                                 )

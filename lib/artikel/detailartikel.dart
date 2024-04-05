@@ -27,18 +27,16 @@ class _DetailArtikelState extends State<DetailArtikel> {
           onPressed: () {
             Navigator.pop(context);
           },
+          color: Colors.white,
           icon: Icon(Icons.arrow_back_ios_outlined),
         ),
         title: Center(
-          child: Padding(
-            padding: EdgeInsets.only(top: 20, bottom: 20, right: 70),
-            child: Text(
-              'Artikel',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
+          child: Text(
+            'Artikel',
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
           ),
         ),
-        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: Colors.blue,
       ),
       body: ListView(
         children: <Widget>[
@@ -62,7 +60,7 @@ class _DetailArtikelState extends State<DetailArtikel> {
                       Text(
                         detailArtikel['title'],
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
                         softWrap: true,

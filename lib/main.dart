@@ -1,6 +1,6 @@
+import 'package:bcare/layoutNav.dart';
 import 'package:flutter/material.dart';
 import 'package:bcare/Service/token_service.dart';
-import 'package:bcare/home.dart';
 import 'package:bcare/login.dart';
 import 'package:bcare/pilihanMasuk.dart';
 import 'package:bcare/profile.dart';
@@ -36,11 +36,11 @@ class MyApp extends StatelessWidget {
             final token = snapshot.data;
             if (token != null) {
               return MaterialApp(
-                home: HalamanUtamaPage(),
+                home: LayoutNav(),
                 initialRoute: '/home',
                 routes: {
                   '/bcare-menu': (context) => BcareMenu(),
-                  '/home': (context) => HalamanUtamaPage(),
+                  '/home': (context) => LayoutNav(),
                   '/profile': (context) => Profile(),
                 },
               );

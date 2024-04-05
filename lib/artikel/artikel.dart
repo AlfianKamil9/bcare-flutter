@@ -39,12 +39,11 @@ class _ArtikelPageState extends State<ArtikelPage> {
             },
             icon: Icon(Icons.arrow_back_ios_outlined),
           ),
-          title: Padding(
-            padding: const EdgeInsets.only(left: 60.0),
+          title: Center(
             child: Text(
               'Daftar Artikel',
               style:
-                  TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                  TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
             ),
           )),
       body: Padding(
@@ -87,7 +86,7 @@ class _ArtikelPageState extends State<ArtikelPage> {
                                       maxLines: 2,
                                       textAlign: TextAlign.justify,
                                       style: TextStyle(
-                                          fontSize: 18,
+                                          fontSize: 16,
                                           fontWeight: FontWeight.bold),
                                     ),
                                     SizedBox(height: 7),
@@ -97,7 +96,7 @@ class _ArtikelPageState extends State<ArtikelPage> {
                                       maxLines: 2,
                                       textAlign: TextAlign.justify,
                                       style: TextStyle(
-                                          fontSize: 15,
+                                          fontSize: 14,
                                           fontWeight: FontWeight.w300),
                                     )
                                   ]),

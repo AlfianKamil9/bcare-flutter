@@ -142,7 +142,7 @@ class _HistoryPesananState extends State<HistoryPesanan> {
                       style: ElevatedButton.styleFrom(
                           backgroundColor:
                               isClicked2 == true ? Colors.blue : Colors.white,
-                          fixedSize: Size(130, 25),
+                          fixedSize: Size(140, 25),
                           side: BorderSide(
                               color: const Color.fromARGB(255, 54, 136, 244),
                               width: 1),
@@ -190,7 +190,7 @@ class _HistoryPesananState extends State<HistoryPesanan> {
                       style: ElevatedButton.styleFrom(
                           backgroundColor:
                               isClicked4 == true ? Colors.blue : Colors.white,
-                          fixedSize: Size(120, 25),
+                          fixedSize: Size(130, 25),
                           side: BorderSide(
                               color: const Color.fromARGB(255, 54, 136, 244),
                               width: 1),
@@ -369,10 +369,11 @@ class _HistoryPesananState extends State<HistoryPesanan> {
                                                           child: Text(
                                                             'Detail',
                                                             style: TextStyle(
+                                                                fontSize: 12,
                                                                 color: Colors
                                                                     .blue),
                                                           )),
-                                                      SizedBox(width: 8),
+                                                      SizedBox(width: 5),
                                                       // ELSE IF JIKA SUDAH TRANSFER
 
                                                       Container(
@@ -400,6 +401,8 @@ class _HistoryPesananState extends State<HistoryPesanan> {
                                                                 child: Text(
                                                                     'Bayar',
                                                                     style: TextStyle(
+                                                                        fontSize:
+                                                                            12,
                                                                         color: Colors
                                                                             .white)))
                                                             : Container(),

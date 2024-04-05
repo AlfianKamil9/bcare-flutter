@@ -11,7 +11,7 @@ import 'package:bcare/service/artikel_service.dart';
 import 'package:bcare/vidio/detailvideo.dart';
 import 'package:bcare/vidio/video.dart';
 import 'package:flutter/material.dart';
-import 'package:convex_bottom_bar/convex_bottom_bar.dart';
+//import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 
 class HalamanUtamaPage extends StatefulWidget {
   const HalamanUtamaPage({super.key});
@@ -161,7 +161,7 @@ class _HalamanUtamaPageState extends State<HalamanUtamaPage> {
                                   Text(
                                     "Kondisi Anda",
                                     style: TextStyle(
-                                      fontSize: 20,
+                                      fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                       color: const Color.fromARGB(255, 0, 0, 0),
                                     ),
@@ -178,7 +178,7 @@ class _HalamanUtamaPageState extends State<HalamanUtamaPage> {
                                       fontStyle: hasil == 'null'
                                           ? FontStyle.italic
                                           : FontStyle.normal,
-                                      fontSize: 16,
+                                      fontSize: 14,
                                       fontWeight: FontWeight.w400,
                                       color: Color.fromARGB(255, 67, 67, 67),
                                     ),
@@ -213,7 +213,7 @@ class _HalamanUtamaPageState extends State<HalamanUtamaPage> {
                                     Text(
                                       "Rekomendasi",
                                       style: TextStyle(
-                                        fontSize: 20,
+                                        fontSize: 16,
                                         fontWeight: FontWeight.bold,
                                         color:
                                             const Color.fromARGB(255, 0, 0, 0),
@@ -288,7 +288,7 @@ class _HalamanUtamaPageState extends State<HalamanUtamaPage> {
                                         Text(
                                           "Artikel",
                                           style: TextStyle(
-                                            fontSize: 20,
+                                            fontSize: 16,
                                             fontWeight: FontWeight.bold,
                                             color: const Color.fromARGB(
                                                 255, 0, 0, 0),
@@ -316,6 +316,8 @@ class _HalamanUtamaPageState extends State<HalamanUtamaPage> {
                                             child: CircularProgressIndicator(),
                                           )
                                         : ListView.builder(
+                                            physics:
+                                                NeverScrollableScrollPhysics(),
                                             scrollDirection: Axis.vertical,
                                             shrinkWrap: true,
                                             itemCount: listArtikel.length,
@@ -441,8 +443,9 @@ class _HalamanUtamaPageState extends State<HalamanUtamaPage> {
                                     SizedBox(width: 7),
                                     Text(
                                       "Video Pembelajaran",
+                                      softWrap: true,
                                       style: TextStyle(
-                                        fontSize: 20,
+                                        fontSize: 16,
                                         fontWeight: FontWeight.bold,
                                         color:
                                             const Color.fromARGB(255, 0, 0, 0),
@@ -472,6 +475,7 @@ class _HalamanUtamaPageState extends State<HalamanUtamaPage> {
                                       child: CircularProgressIndicator(),
                                     ))
                                   : ListView.builder(
+                                      physics: NeverScrollableScrollPhysics(),
                                       scrollDirection: Axis.vertical,
                                       shrinkWrap: true,
                                       itemCount: listVideo.length,
@@ -526,7 +530,7 @@ class _HalamanUtamaPageState extends State<HalamanUtamaPage> {
                                                                     .start,
                                                             children: [
                                                               Text(
-                                                                "${video.title_video}",
+                                                                "${video.title_video}...",
                                                                 softWrap: true,
                                                                 textAlign:
                                                                     TextAlign
@@ -539,7 +543,7 @@ class _HalamanUtamaPageState extends State<HalamanUtamaPage> {
                                                                         FontWeight
                                                                             .bold,
                                                                     fontSize:
-                                                                        14),
+                                                                        13),
                                                               ),
                                                               SizedBox(
                                                                   height: 20),
@@ -581,40 +585,40 @@ class _HalamanUtamaPageState extends State<HalamanUtamaPage> {
               ),
             ),
           ])),
-      bottomNavigationBar: ConvexAppBar(
-        style: TabStyle.fixedCircle,
-        backgroundColor: Color(0xFFC5C5C5),
-        color: Color.fromARGB(255, 211, 80, 124),
-        activeColor: Colors.pink[300],
-        initialActiveIndex: 1,
-        height: 60,
-        items: [
-          TabItem(
-            icon: Icon(
-              Icons.home,
-              color: Colors.black,
-              size: 32,
-            ),
-          ),
-          TabItem(
-              icon: Icon(
-            Icons.health_and_safety_sharp,
-            color: Colors.white,
-            size: 40,
-          )),
-          TabItem(
-              icon: Icon(
-            Icons.library_books,
-            color: Colors.black,
-            size: 32,
-          )),
-        ],
-        onTap: (int i) {
-          setState(() => currentIndex = i);
-          Navigator.push(
-              context, MaterialPageRoute(builder: (i) => pages[currentIndex]));
-        },
-      ),
+      // bottomNavigationBar: ConvexAppBar(
+      //   style: TabStyle.fixedCircle,
+      //   backgroundColor: Color(0xFFC5C5C5),
+      //   color: Color.fromARGB(255, 211, 80, 124),
+      //   activeColor: Colors.pink[300],
+      //   initialActiveIndex: 1,
+      //   height: 60,
+      //   items: [
+      //     TabItem(
+      //       icon: Icon(
+      //         Icons.home,
+      //         color: Colors.black,
+      //         size: 32,
+      //       ),
+      //     ),
+      //     TabItem(
+      //         icon: Icon(
+      //       Icons.health_and_safety_sharp,
+      //       color: Colors.white,
+      //       size: 40,
+      //     )),
+      //     TabItem(
+      //         icon: Icon(
+      //       Icons.library_books,
+      //       color: Colors.black,
+      //       size: 32,
+      //     )),
+      //   ],
+      //   onTap: (int i) {
+      //     setState(() => currentIndex = i);
+      //     Navigator.push(
+      //         context, MaterialPageRoute(builder: (i) => pages[currentIndex]));
+      //   },
+      // ),
     );
   }
 }

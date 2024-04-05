@@ -84,13 +84,7 @@ class _Pertanyaan2State extends State<Pertanyaan2> {
     return Scaffold(
       appBar: AppBar(
           backgroundColor: Colors.blue[400],
-          leading: IconButton(
-            color: Colors.white,
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: Icon(Icons.arrow_back_ios_outlined),
-          ),
+          leading: Container(),
           title: Padding(
             padding: const EdgeInsets.only(left: 50.0),
             child: Text(
@@ -111,7 +105,7 @@ class _Pertanyaan2State extends State<Pertanyaan2> {
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
-                        fontSize: 18),
+                        fontSize: 16),
                   ),
                 ),
                 Divider(color: Colors.grey),
@@ -136,7 +130,7 @@ class _Pertanyaan2State extends State<Pertanyaan2> {
                                     "Q${item.id}. ${item.question} ?",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 18),
+                                        fontSize: 15),
                                     softWrap: true,
                                     textAlign: TextAlign.start,
                                   ),

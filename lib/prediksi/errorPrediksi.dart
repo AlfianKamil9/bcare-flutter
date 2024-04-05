@@ -1,19 +1,12 @@
 import 'package:bcare/menu.dart';
 import 'package:flutter/material.dart';
 
-class RejectPrediksi extends StatelessWidget {
-  const RejectPrediksi({super.key});
-
+class RejectPrediksi extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: RejectPrediksis(),
-      routes: {'/home': (context) => BcareMenu()},
-    );
-  }
+  State<RejectPrediksi> createState() => _RejectPrediksiState();
 }
 
-class RejectPrediksis extends StatelessWidget {
+class _RejectPrediksiState extends State<RejectPrediksi> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +23,7 @@ class RejectPrediksis extends StatelessWidget {
       body: Center(
         child: Padding(
           padding: EdgeInsets.all(60),
-          child: Column(
+          child: ListView(
             children: [
               SizedBox(
                 height: 30,
@@ -39,21 +32,23 @@ class RejectPrediksis extends StatelessWidget {
                 "Maaf, Anda bukan kriteria untuk melakukan prediksi Baby Blues",
                 style: TextStyle(
                     fontWeight: FontWeight.w700,
-                    fontSize: 25,
+                    fontSize: 20,
                     color: Colors.pink[300]),
                 softWrap: true,
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 40),
-              Image.asset(
-                "assets/images/icon-sad.png",
-                width: 150,
+              Icon(
+                Icons.error_outline_rounded,
+                size: 130,
+                color: Colors.pink[300],
               ),
               SizedBox(height: 80),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(minimumSize: Size(120, 69)),
                   onPressed: () {
-                    Navigator.pushNamed(context, '/home');
+                    Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (context) => BcareMenu()));
                   },
                   child: Text(
                     "Kembali ke Halaman Utama",

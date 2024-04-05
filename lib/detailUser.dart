@@ -62,12 +62,11 @@ class _MyProfileUserState extends State<MyProfileUser> {
               },
               icon: Icon(Icons.arrow_back_ios_rounded)),
           backgroundColor: const Color.fromARGB(255, 246, 248, 249),
-          title: Padding(
-              padding: EdgeInsets.only(left: 100.0),
+          title: Center(
               child: Text(
-                "Profile",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ))),
+            "Profile",
+            style: TextStyle(fontWeight: FontWeight.w500),
+          ))),
       body: Stack(children: <Widget>[
         Image.asset(
           'assets/images/pilihan-bg-2.png', // Replace with your image path

@@ -47,12 +47,11 @@ class _DetailVideoState extends State<DetailVideo> {
               },
               icon: Icon(Icons.arrow_back_ios_outlined),
             ),
-            title: Padding(
-              padding: const EdgeInsets.only(left: 60.0),
+            title: Center(
               child: Text(
                 'PLAYER VIDEO',
                 style:
-                    TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                    TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
               ),
             )),
         body: ListView(
@@ -94,7 +93,7 @@ class _DetailVideoState extends State<DetailVideo> {
                               softWrap: true,
                               textAlign: TextAlign.justify,
                               style: TextStyle(
-                                  fontSize: 18,
+                                  fontSize: 17,
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold),
                             ),
@@ -108,7 +107,7 @@ class _DetailVideoState extends State<DetailVideo> {
                               style: TextStyle(
                                   fontSize: 15,
                                   color: Colors.black,
-                                  fontWeight: FontWeight.bold),
+                                  fontWeight: FontWeight.w400),
                             ),
                           )
                         ],

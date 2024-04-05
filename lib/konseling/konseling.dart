@@ -39,11 +39,10 @@ class _KonselingPageState extends State<KonselingPage> {
           icon: Icon(Icons.arrow_back_ios_outlined),
         ),
         backgroundColor: Colors.blue[300],
-        title: Padding(
-          padding: const EdgeInsets.only(left: 40),
+        title: Center(
           child: Text(
             "Layanan Konseling",
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
           ),
         ),
       ),
@@ -95,7 +94,7 @@ class _KonselingPageState extends State<KonselingPage> {
                                           "${item.title_konseling}",
                                           softWrap: true,
                                           style: TextStyle(
-                                              fontSize: 20,
+                                              fontSize: 16,
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold),
                                         ),
@@ -104,7 +103,7 @@ class _KonselingPageState extends State<KonselingPage> {
                                             style: TextStyle(
                                                 fontSize: 15,
                                                 color: Colors.black,
-                                                fontWeight: FontWeight.bold)),
+                                                fontWeight: FontWeight.w500)),
                                         SizedBox(
                                           height: 10,
                                         ),

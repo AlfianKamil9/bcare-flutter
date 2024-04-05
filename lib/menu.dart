@@ -1,40 +1,25 @@
 import 'package:bcare/artikel/artikel.dart';
-import 'package:bcare/home.dart';
 import 'package:bcare/infoKuisioner.dart';
 import 'package:bcare/vidio/video.dart';
 import 'package:flutter/material.dart';
 
 import 'konseling/konseling.dart';
 
-class BcareMenu extends StatelessWidget {
-  const BcareMenu({super.key});
-
+class BcareMenu extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: BcareMenus(),
-      routes: {'/home': (context) => HalamanUtamaPage()},
-    );
-  }
+  State<BcareMenu> createState() => _BcareMenuState();
 }
 
-class BcareMenus extends StatelessWidget {
+class _BcareMenuState extends State<BcareMenu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-            onPressed: () {
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => HalamanUtamaPage()));
-            },
-            icon: Icon(Icons.arrow_back_ios_rounded)),
-        title: Padding(
-            padding: EdgeInsets.only(left: 100.0),
+        title: Center(
             child: Image.asset(
-              'assets/images/BCare.png',
-              height: 20,
-            )),
+          'assets/images/BCare.png',
+          height: 20,
+        )),
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       ),
       body: Container(
@@ -51,8 +36,8 @@ class BcareMenus extends StatelessWidget {
                     ),
                   },
                   child: Container(
-                    width: 150,
-                    height: 150,
+                    width: 135,
+                    height: 135,
                     child: Card(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(
@@ -73,18 +58,19 @@ class BcareMenus extends StatelessWidget {
                         child: Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Icon(
                                   Icons.support_agent,
                                   color:
                                       const Color.fromARGB(255, 255, 255, 255),
-                                  size: 60,
+                                  size: 40,
                                 ),
                                 Text(
                                   'Konseling dengan Konselor',
                                   softWrap: true,
                                   style: TextStyle(
-                                      fontSize: 14,
+                                      fontSize: 10,
                                       fontWeight: FontWeight.bold,
                                       color: const Color.fromARGB(
                                           255, 255, 255, 255)),
@@ -103,30 +89,44 @@ class BcareMenus extends StatelessWidget {
                     );
                   },
                   child: Container(
-                    width: 150,
-                    height: 150,
+                    width: 135,
+                    height: 135,
                     child: Card(
-                      child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Column(
-                            children: [
-                              Icon(
-                                Icons.health_and_safety_outlined,
-                                color: Colors.pink[400],
-                                size: 60,
-                              ),
-                              SizedBox(height: 5),
-                              Text(
-                                'Identifikasi dini Baby Blues',
-                                softWrap: true,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.pink[400]),
-                              ),
-                            ],
-                          )),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              const Color.fromARGB(255, 255, 177, 201),
+                              const Color.fromARGB(255, 255, 109, 154)
+                            ], // Ganti warna sesuai dengan kebutuhan Anda
+                            begin: Alignment.bottomCenter,
+                            end: Alignment.topCenter,
+                          ),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.health_and_safety_outlined,
+                                  color: Colors.white,
+                                  size: 40,
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  'Identifikasi dini Baby Blues',
+                                  softWrap: true,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                ),
+                              ],
+                            )),
+                      ),
                     ),
                   ),
                 ),
@@ -143,36 +143,49 @@ class BcareMenus extends StatelessWidget {
                     ),
                   },
                   child: Container(
-                    width: 150,
-                    height: 150,
+                    width: 135,
+                    height: 135,
                     child: Card(
-                      child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 7,
-                              ),
-                              Icon(
-                                Icons.video_collection_rounded,
-                                color: const Color.fromARGB(255, 167, 66, 245),
-                                size: 60,
-                              ),
-                              SizedBox(
-                                height: 7,
-                              ),
-                              Text(
-                                'Video',
-                                softWrap: true,
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                    color: const Color.fromARGB(
-                                        255, 167, 66, 245)),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          )),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              const Color.fromARGB(255, 255, 177, 201),
+                              const Color.fromARGB(255, 255, 109, 154)
+                            ], // Ganti warna sesuai dengan kebutuhan Anda
+                            begin: Alignment.bottomCenter,
+                            end: Alignment.topCenter,
+                          ),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  height: 7,
+                                ),
+                                Icon(
+                                  Icons.video_collection_rounded,
+                                  color: Colors.white,
+                                  size: 40,
+                                ),
+                                SizedBox(
+                                  height: 7,
+                                ),
+                                Text(
+                                  'Video',
+                                  softWrap: true,
+                                  style: TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            )),
+                      ),
                     ),
                   ),
                 ),
@@ -183,33 +196,47 @@ class BcareMenus extends StatelessWidget {
                     );
                   },
                   child: Container(
-                    width: 150,
-                    height: 150,
+                    width: 135,
+                    height: 135,
                     child: Card(
-                      child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 7,
-                              ),
-                              Icon(
-                                Icons.article_rounded,
-                                color: Color.fromARGB(255, 243, 174, 24),
-                                size: 60,
-                              ),
-                              SizedBox(height: 7),
-                              Text(
-                                'Artikel',
-                                softWrap: true,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                    color: Color.fromARGB(255, 243, 174, 24)),
-                              ),
-                            ],
-                          )),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              const Color.fromARGB(255, 255, 177, 201),
+                              const Color.fromARGB(255, 255, 109, 154)
+                            ], // Ganti warna sesuai dengan kebutuhan Anda
+                            begin: Alignment.bottomCenter,
+                            end: Alignment.topCenter,
+                          ),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  height: 7,
+                                ),
+                                Icon(
+                                  Icons.article_rounded,
+                                  color: Colors.white,
+                                  size: 40,
+                                ),
+                                SizedBox(height: 7),
+                                Text(
+                                  'Artikel',
+                                  softWrap: true,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                ),
+                              ],
+                            )),
+                      ),
                     ),
                   ),
                 ),

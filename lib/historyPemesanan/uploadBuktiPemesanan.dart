@@ -88,11 +88,10 @@ class _UploadBuktiBayarState extends State<UploadBuktiBayar> {
           icon: Icon(Icons.arrow_back_ios_outlined),
         ),
         backgroundColor: Colors.blue[300],
-        title: Padding(
-          padding: const EdgeInsets.only(left: 40),
+        title: Center(
           child: Text(
             "Upload Bukti Bayar",
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
           ),
         ),
       ),

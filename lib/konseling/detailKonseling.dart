@@ -89,10 +89,11 @@ class _DetailKonselingState extends State<DetailKonseling> {
           icon: const Icon(Icons.arrow_back_ios_outlined),
         ),
         backgroundColor: Colors.blue[400],
-        title: const Text(
-          'Pesan Konseling',
-          style: TextStyle(
-              color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+        title: Center(
+          child: Text(
+            'Pesan Konseling',
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+          ),
         ),
       ),
       body: ListView(children: <Widget>[
@@ -131,14 +132,14 @@ class _DetailKonselingState extends State<DetailKonseling> {
                           const Text(
                             "Layanan :",
                             style: TextStyle(
-                                fontSize: 20,
+                                fontSize: 16,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black),
                           ),
                           Text(
                             "${item['title_konseling']}",
                             style: TextStyle(
-                                fontSize: 20,
+                                fontSize: 15,
                                 fontWeight: FontWeight.w300,
                                 color: Colors.black),
                           ),
@@ -146,7 +147,7 @@ class _DetailKonselingState extends State<DetailKonseling> {
                           const Text(
                             "Konselor :",
                             style: TextStyle(
-                                fontSize: 20,
+                                fontSize: 16,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black),
                           ),
@@ -155,7 +156,7 @@ class _DetailKonselingState extends State<DetailKonseling> {
                             softWrap: true,
                             textAlign: TextAlign.justify,
                             style: TextStyle(
-                                fontSize: 20,
+                                fontSize: 15,
                                 fontWeight: FontWeight.w300,
                                 color: Colors.black),
                           ),
@@ -164,7 +165,7 @@ class _DetailKonselingState extends State<DetailKonseling> {
                             "Deskripsi :",
                             textAlign: TextAlign.left,
                             style: TextStyle(
-                                fontSize: 20,
+                                fontSize: 16,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black),
                           ),
@@ -181,7 +182,7 @@ class _DetailKonselingState extends State<DetailKonseling> {
                           const Text(
                             "Atur Jadwal Konsultasi",
                             style: TextStyle(
-                                fontSize: 20,
+                                fontSize: 16,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black),
                           ),
@@ -189,7 +190,7 @@ class _DetailKonselingState extends State<DetailKonseling> {
                           const Text(
                             "Jam Konsultasi",
                             style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 15,
                                 fontWeight: FontWeight.w500,
                                 color: Colors.grey),
                           ),
@@ -205,8 +206,9 @@ class _DetailKonselingState extends State<DetailKonseling> {
                                     title: const Text(
                                       '12.00 WIB',
                                       style: TextStyle(
+                                          fontSize: 14,
                                           color: Colors.blue,
-                                          fontWeight: FontWeight.bold),
+                                          fontWeight: FontWeight.w500),
                                     ),
                                     value: '12:00:00',
                                     groupValue: _selectedTime,
@@ -222,7 +224,8 @@ class _DetailKonselingState extends State<DetailKonseling> {
                                       '15.00 WIB',
                                       style: TextStyle(
                                           color: Colors.blue,
-                                          fontWeight: FontWeight.bold),
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500),
                                     ),
                                     value: '15:00:00',
                                     groupValue: _selectedTime,
@@ -243,8 +246,9 @@ class _DetailKonselingState extends State<DetailKonseling> {
                                     title: const Text(
                                       '19.00 WIB',
                                       style: TextStyle(
+                                          fontSize: 14,
                                           color: Colors.blue,
-                                          fontWeight: FontWeight.bold),
+                                          fontWeight: FontWeight.w500),
                                     ),
                                     value: '19:00:00',
                                     groupValue: _selectedTime,
@@ -261,7 +265,7 @@ class _DetailKonselingState extends State<DetailKonseling> {
                           const Text(
                             "Tanggal Konsultasi",
                             style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 15,
                                 fontWeight: FontWeight.w500,
                                 color: Colors.grey),
                           ),
@@ -330,7 +334,7 @@ class _DetailKonselingState extends State<DetailKonseling> {
                               const Text(
                                 "Harga :",
                                 style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black),
                               ),
@@ -340,7 +344,7 @@ class _DetailKonselingState extends State<DetailKonseling> {
                               Text(
                                 "Rp. ${item['harga_konseling']}",
                                 style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.blue),
                               ),
@@ -369,7 +373,7 @@ class _DetailKonselingState extends State<DetailKonseling> {
                                       "Pesan Sekarang",
                                       style: TextStyle(
                                           color: Colors.blue,
-                                          fontSize: 20,
+                                          fontSize: 18,
                                           fontWeight: FontWeight.bold),
                                     )),
                               ),

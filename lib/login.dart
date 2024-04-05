@@ -1,6 +1,6 @@
 import 'package:bcare/Service/auth_service.dart';
 import 'package:bcare/Service/token_service.dart';
-import 'package:bcare/home.dart';
+import 'package:bcare/layoutNav.dart';
 import 'package:bcare/pilihanMasuk.dart';
 import 'package:bcare/register.dart';
 import 'package:flutter/material.dart';
@@ -25,8 +25,8 @@ class _LoginPageState extends State<LoginPage> {
         await TokenManager.saveDetailUser(
             result['name']!.toString(), result['email']!.toString());
         await TokenManager.saveToken(result['token']);
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (BuildContext context) => HalamanUtamaPage()));
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (BuildContext context) => LayoutNav()));
       }
     } catch (e) {
       print(e);
